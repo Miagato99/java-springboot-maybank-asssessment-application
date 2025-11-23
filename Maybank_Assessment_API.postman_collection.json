@@ -1,0 +1,423 @@
+{
+	"info": {
+		"_postman_id": "maybank-assessment-api",
+		"name": "Maybank Assessment Application API",
+		"description": "Complete API collection for Maybank Assessment Application with all endpoints including CRUD operations, pagination, and external API integration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/health",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "health"]
+						},
+						"description": "Check application health status"
+					}
+				},
+				{
+					"name": "Welcome",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/welcome",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "welcome"]
+						},
+						"description": "Get welcome message"
+					}
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Laptop Dell XPS 15\",\n  \"description\": \"High-performance laptop with Intel i7 processor\",\n  \"price\": 5499.99,\n  \"stockQuantity\": 50,\n  \"category\": \"Electronics\",\n  \"active\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/products",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "products"]
+						},
+						"description": "Create a new product with validation"
+					}
+				},
+				{
+					"name": "Get Product by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/products/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "products", "1"]
+						},
+						"description": "Fetch a single product by ID"
+					}
+				},
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/products",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "products"]
+						},
+						"description": "Fetch all products without pagination"
+					}
+				},
+				{
+					"name": "Get Products Paginated (10 per page)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/products/paginated?page=0&size=10&sortBy=name&sortDir=asc",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "products", "paginated"],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"description": "Page number (0-indexed)"
+								},
+								{
+									"key": "size",
+									"value": "10",
+									"description": "Number of records per page"
+								},
+								{
+									"key": "sortBy",
+									"value": "name",
+									"description": "Field to sort by (id, name, price, createdAt)"
+								},
+								{
+									"key": "sortDir",
+									"value": "asc",
+									"description": "Sort direction (asc or desc)"
+								}
+							]
+						},
+						"description": "Get products with pagination - 10 records per page (Requirement #6)"
+					}
+				},
+				{
+					"name": "Get Active Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/products/active?page=0&size=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "products", "active"],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get only active products with pagination"
+					}
+				},
+				{
+					"name": "Search Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/products/search?keyword=laptop&page=0&size=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "products", "search"],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "laptop",
+									"description": "Search keyword"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Search products by keyword in name or description"
+					}
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Laptop Dell XPS 15 Updated\",\n  \"description\": \"High-performance laptop with Intel i9 processor\",\n  \"price\": 6499.99,\n  \"stockQuantity\": 45,\n  \"category\": \"Electronics\",\n  \"active\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/products/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "products", "1"]
+						},
+						"description": "Update an existing product"
+					}
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/products/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "products", "1"]
+						},
+						"description": "Delete a product by ID"
+					}
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customerName\": \"John Doe\",\n  \"customerEmail\": \"john.doe@example.com\",\n  \"productId\": 1,\n  \"quantity\": 2,\n  \"notes\": \"Please deliver by end of the week\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/orders",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "orders"]
+						},
+						"description": "Create a new order (INSERT with @Transactional)"
+					}
+				},
+				{
+					"name": "Get Order by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/orders/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "orders", "1"]
+						},
+						"description": "Fetch order by ID (GET with @Transactional)"
+					}
+				},
+				{
+					"name": "Get Order by Order Number",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/orders/order-number/ORD-1234567890-ABCD1234",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "orders", "order-number", "ORD-1234567890-ABCD1234"]
+						},
+						"description": "Fetch order by order number"
+					}
+				},
+				{
+					"name": "Get All Orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/orders",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "orders"]
+						},
+						"description": "Fetch all orders without pagination"
+					}
+				},
+				{
+					"name": "Get Orders Paginated (10 per page)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/orders/paginated?page=0&size=10&sortBy=createdAt&sortDir=desc",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "orders", "paginated"],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"description": "Page number (0-indexed)"
+								},
+								{
+									"key": "size",
+									"value": "10",
+									"description": "Number of records per page"
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt",
+									"description": "Field to sort by"
+								},
+								{
+									"key": "sortDir",
+									"value": "desc",
+									"description": "Sort direction"
+								}
+							]
+						},
+						"description": "Get orders with pagination - 10 records per page (Requirement #6)"
+					}
+				},
+				{
+					"name": "Get Orders by Customer Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/orders/customer/john.doe@example.com?page=0&size=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "orders", "customer", "john.doe@example.com"],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get orders for specific customer with pagination"
+					}
+				},
+				{
+					"name": "Update Order Status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/orders/1/status?status=CONFIRMED",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "orders", "1", "status"],
+							"query": [
+								{
+									"key": "status",
+									"value": "CONFIRMED",
+									"description": "Order status: PENDING, CONFIRMED, PROCESSING, SHIPPED, DELIVERED, CANCELLED"
+								}
+							]
+						},
+						"description": "Update order status (UPDATE with @Transactional)"
+					}
+				},
+				{
+					"name": "Delete Order",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/orders/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "orders", "1"]
+						},
+						"description": "Delete an order by ID"
+					}
+				}
+			]
+		},
+		{
+			"name": "External API Integration",
+			"item": [
+				{
+					"name": "Get External Posts (Nested API Call)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/integration/external-posts",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "integration", "external-posts"]
+						},
+						"description": "Nested API call: Your API -> JSONPlaceholder API (Requirement #7)"
+					}
+				},
+				{
+					"name": "Get Product with External Data (Multiple Nested Calls)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/integration/product-with-external/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "integration", "product-with-external", "1"]
+						},
+						"description": "Demonstrates nested API calls: Client -> Your API -> Internal DB + External API (Requirement #7)"
+					}
+				},
+				{
+					"name": "Get External Post by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/integration/external-post/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "integration", "external-post", "1"]
+						},
+						"description": "Fetch single post from external API by ID"
+					}
+				}
+			]
+		}
+	]
+}
